@@ -29,5 +29,6 @@ urlpatterns = [
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('google/',GoogleAuthView.as_view(),name='logout'),
     path('accounts/',include('accounts.urls')),
+    path('public/', include('non_auth_content.urls')),  # Non-authenticated content URLs
     # path('auth/google/', GoogleLogin.as_view(), name='google-login')
 ]
