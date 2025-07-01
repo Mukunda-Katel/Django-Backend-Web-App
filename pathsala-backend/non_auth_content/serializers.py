@@ -25,4 +25,14 @@ class CourseDetailSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Courses
-        fields = ['id', 'title', 'description', 'creator', 'price', 'duration', 'weeks'] 
+        fields = ['id', 'title', 'description', 'creator', 'price', 'duration', 'weeks']
+
+class WeekOnlySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Weeks
+        fields = ['id', 'number', 'title']
+
+class LessonOnlySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Lessons
+        fields = ['id', 'title', 'description', 'order'] 
