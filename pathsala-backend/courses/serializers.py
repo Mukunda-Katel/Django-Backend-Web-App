@@ -1,9 +1,7 @@
 from rest_framework import serializers
-from .models import Courses
+from .models import Courses, Weeks, Lessons, Videos
 
 
-
-from .models import Courses, Weeks, Lessons
 
 class LessonSerializer(serializers.ModelSerializer):
     class Meta:
@@ -38,3 +36,14 @@ class WeekSerializer(serializers.ModelSerializer):
     class Meta:
         model = Weeks
         fields = ['id','number','title','lessons']
+
+class LessonWithVideoIDsSerializer(serializers.ModelSerializer):
+    video_ids = serializers.PrimaryKeyRelatedField(many=True, read_only=True, source='video')
+    class Meta:
+        model = Lessons
+        fields = ['id', 'title', 'description', 'video_ids']
+
+class VideoURLSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Videos
+        fields = ['id', 'videos_url']
