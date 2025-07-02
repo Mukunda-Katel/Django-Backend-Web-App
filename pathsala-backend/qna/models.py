@@ -62,6 +62,8 @@ class Comment(models.Model):
     """
     # The video this comment is for
     video = models.ForeignKey(Lessons, related_name='comments', on_delete=models.CASCADE)
+    # The course this comment is for
+    course = models.ForeignKey(Courses, related_name='comments', on_delete=models.CASCADE, null=True)
     # The user who made the comment
     user = models.ForeignKey(User, related_name='comments', on_delete=models.CASCADE)
     content = models.TextField()

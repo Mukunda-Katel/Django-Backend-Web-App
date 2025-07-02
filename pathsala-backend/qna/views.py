@@ -88,11 +88,13 @@ class CommentViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         print("This is query_params",self.request.query_params)
         video_id = self.request.query_params.get('video')
-        if not video_id:
+        course_id = self.request.query_params.get('course')
+        if not video_id or not course_id:
             return Comment.objects.none()
 
         return Comment.objects.filter(
             video_id=video_id,
+            course_id=course_id,
             parent=None
         ).select_related('user').prefetch_related(
             Prefetch('votes', queryset=Vote.objects.select_related('user')),
@@ -105,7 +107,9 @@ class CommentViewSet(viewsets.ModelViewSet):
         )
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        course_id = self.request.data.get('course')
+        video_id = self.request.data.get('video')
+        serializer.save(user=self.request.user, course_id=course_id, video_id=video_id)
 
     @action(detail=True, methods=['post'], permission_classes=[permissions.IsAuthenticated])
     def upvote(self, request, pk=None):
