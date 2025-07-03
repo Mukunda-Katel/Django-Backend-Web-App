@@ -38,7 +38,7 @@ class Lessons(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     # video_url = models.URLField()
-    video = models.ManyToManyField(Videos,related_name='videos')
+    video = models.ForeignKey(Videos, on_delete=models.SET_NULL, null=True, related_name='lessons')
     order = models.PositiveIntegerField()  
 
     class Meta:

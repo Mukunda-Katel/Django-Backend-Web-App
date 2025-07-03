@@ -7,7 +7,7 @@ class VideoSerializer(serializers.ModelSerializer):
         fields = ['videos_url']
 
 class LessonSerializer(serializers.ModelSerializer):
-    video = VideoSerializer(many=True, read_only=True)
+    video = VideoSerializer(read_only=True)
     
     class Meta:
         model = Lessons

@@ -19,7 +19,7 @@ from django.urls import path,include
 from accounts.views import GoogleAuthView
 from rest_framework_simplejwt.views import TokenRefreshView
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('', admin.site.urls),
     path('qna/', include('qna.urls')),          # QnA app URLs
     path('courses/', include('courses.urls')),  # Courses app URLs
     path('notices/', include('notices.urls')),  # Notices app URLs

@@ -38,10 +38,10 @@ class WeekSerializer(serializers.ModelSerializer):
         fields = ['id','number','title','lessons']
 
 class LessonWithVideoIDsSerializer(serializers.ModelSerializer):
-    video_ids = serializers.PrimaryKeyRelatedField(many=True, read_only=True, source='video')
+    video_id = serializers.PrimaryKeyRelatedField(read_only=True, source='video')
     class Meta:
         model = Lessons
-        fields = ['id', 'title', 'description', 'video_ids']
+        fields = ['id', 'title', 'description', 'video_id']
 
 class VideoURLSerializer(serializers.ModelSerializer):
     class Meta:

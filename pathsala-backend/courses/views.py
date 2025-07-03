@@ -50,9 +50,8 @@ class LessonVideoPlayAPIView(APIView):
             lesson = Lessons.objects.get(id=lesson_id, week_id=week_id, week__course_id=course_id)
         except Lessons.DoesNotExist:
             return Response({'detail': 'Lesson not found.'}, status=status.HTTP_404_NOT_FOUND)
-        try:
-            video = lesson.video.get(id=video_id)
-        except Videos.DoesNotExist:
+        video = lesson.video
+        if not video or video.id != video_id:
             return Response({'detail': 'Video not found for this lesson.'}, status=status.HTTP_404_NOT_FOUND)
         serializer = VideoURLSerializer(video)
         return Response(serializer.data)
