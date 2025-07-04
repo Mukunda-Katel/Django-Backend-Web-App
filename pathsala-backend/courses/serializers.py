@@ -47,3 +47,20 @@ class VideoURLSerializer(serializers.ModelSerializer):
     class Meta:
         model = Videos
         fields = ['id', 'videos_url']
+
+class LessonNoVideoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Lessons
+        fields = ['id', 'title', 'description', 'order']
+
+class WeekNoVideoSerializer(serializers.ModelSerializer):
+    lessons = LessonNoVideoSerializer(many=True, read_only=True)
+    class Meta:
+        model = Weeks
+        fields = ['id', 'number', 'title', 'lessons']
+
+class UpcomingCourseDetailSerializer(serializers.ModelSerializer):
+    weeks = WeekNoVideoSerializer(many=True, read_only=True)
+    class Meta:
+        model = Courses
+        fields = ['id', 'title', 'description', 'duration', 'price', 'weeks']

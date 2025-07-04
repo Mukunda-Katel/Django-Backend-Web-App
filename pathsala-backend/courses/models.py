@@ -7,6 +7,11 @@ class Categorys(models.Model):
 
     def __str__(self):
         return f"category-{self.category_title}"
+
+    @staticmethod
+    def get_upcoming_category():
+        obj, created = Categorys.objects.get_or_create(category_title='Upcoming Course', defaults={'slug': 'upcoming-course'})
+        return obj
 class Courses(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
@@ -47,4 +52,5 @@ class Lessons(models.Model):
 
     def __str__(self):
         return self.title
+
 

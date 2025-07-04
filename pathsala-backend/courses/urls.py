@@ -1,16 +1,12 @@
 from django.urls import path
-from .views import (
-    CourseDetailAPIView,
-    CourseListAPIView,
-    AdminCourseAPIView,
-    LessonVideoInfoAPIView,
-    LessonVideoPlayAPIView,
-)
+from .views import CourseListAPIView, AdminCourseAPIView, CourseDetailAPIView, LessonVideoInfoAPIView, LessonVideoPlayAPIView, UpcomingCourseListAPIView, UpcomingCourseDetailAPIView
 
 urlpatterns = [
-    path('courses/', CourseListAPIView.as_view(), name='course-list'),
+    path('', CourseListAPIView.as_view(), name='course-list'),
+    path('upcoming/', UpcomingCourseListAPIView.as_view(), name='upcoming-course-list'),
+    path('upcoming/<int:pk>/', UpcomingCourseDetailAPIView.as_view(), name='upcoming-course-detail'),
+    path('admin/', AdminCourseAPIView.as_view(), name='admin-course'),
     path('<int:pk>/', CourseDetailAPIView.as_view(), name='course-detail'),
-    path('admin/courses/', AdminCourseAPIView.as_view(), name='admin-course'),
-    path('courses/<int:course_id>/weeks/<int:week_id>/lessons/<int:lesson_id>/video/', LessonVideoInfoAPIView.as_view(), name='lesson-video-info'),
-    path('courses/<int:course_id>/weeks/<int:week_id>/lessons/<int:lesson_id>/video/<int:video_id>/', LessonVideoPlayAPIView.as_view(), name='lesson-video-play'),
+    path('<int:course_id>/week/<int:week_id>/lesson/<int:lesson_id>/video/', LessonVideoInfoAPIView.as_view(), name='lesson-video-info'),
+    path('<int:course_id>/week/<int:week_id>/lesson/<int:lesson_id>/video/<int:video_id>/', LessonVideoPlayAPIView.as_view(), name='lesson-video-play'),
 ]

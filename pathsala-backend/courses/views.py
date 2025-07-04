@@ -1,7 +1,7 @@
 from rest_framework import generics, permissions
 from enrollments.models import Enrollments
-from .models import Courses, Lessons, Videos, Weeks
-from .serializers import CourseSerializer, LessonWithVideoIDsSerializer, VideoURLSerializer
+from .models import Courses, Lessons, Videos, Weeks, Categorys
+from .serializers import CourseSerializer, LessonWithVideoIDsSerializer, VideoURLSerializer, UpcomingCourseDetailSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
@@ -26,6 +26,22 @@ class CourseDetailAPIView(generics.RetrieveAPIView):
     queryset = Courses.objects.prefetch_related('weeks__lessons')
     serializer_class = CourseSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+class UpcomingCourseListAPIView(generics.ListAPIView):
+    serializer_class = CourseSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def get_queryset(self):
+        upcoming_category = Categorys.get_upcoming_category()
+        return Courses.objects.filter(category=upcoming_category)
+
+class UpcomingCourseDetailAPIView(generics.RetrieveAPIView):
+    serializer_class = UpcomingCourseDetailSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def get_queryset(self):
+        upcoming_category = Categorys.get_upcoming_category()
+        return Courses.objects.filter(category=upcoming_category)
 
 class LessonVideoInfoAPIView(APIView):
     permission_classes = [IsAuthenticated]
